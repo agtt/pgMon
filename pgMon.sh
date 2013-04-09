@@ -60,25 +60,8 @@ setup() {
 cat << EOF
 BEGIN;
 
-CREATE SEQUENCE serverlist_id_seq;
-CREATE SEQUENCE dblist_id_seq;
-CREATE SEQUENCE tablelist_id_seq;
-CREATE SEQUENCE constraintlist_id_seq;
-CREATE SEQUENCE tablestats_id_seq;
-CREATE SEQUENCE dbstats_id_seq;
-CREATE SEQUENCE dumpsizes_id_seq;
-CREATE SEQUENCE bgwriterstats_id_seq;
-CREATE SEQUENCE growth_ratio_db_id_seq;
-CREATE SEQUENCE growth_ratio_table_id_seq;
-CREATE SEQUENCE indexstats_id_seq;
-CREATE SEQUENCE checkpointstats_id_seq;
-CREATE SEQUENCE repstats_id_seq;
-CREATE SEQUENCE query_heap_blks_stats_id_seq;
-CREATE SEQUENCE query_disc_cache_stats_id_seq;
-CREATE SEQUENCE query_bloat_stats_id_seq;
-
 CREATE TABLE serverlist (
-    id integer primary key default nextval('serverlist_id_seq'),
+    id serial primary key,
     name text,
     ip text,
     code text,
@@ -86,23 +69,23 @@ CREATE TABLE serverlist (
 );
 
 CREATE TABLE dblist (
-    id integer primary key default nextval('dblist_id_seq'),
+    id serial primary key,
     serverid integer references serverlist(id),
     name text,
     code text unique,
     created_at timestamp
 );
 
-CREATE TABLE tablelist(
-    id integer primary key default nextval('tablelist_id_seq'),
+CREATE TABLE tablelist (
+    id serial primary key,
     datid integer references dblist(id),
     name text,
     code text unique,
     created_at timestamp  
 );
 
-CREATE TABLE constraintlist(
-    id integer primary key default nextval('constraintlist_id_seq'),
+CREATE TABLE constraintlist (
+    id serial primary key,
     relid integer references tablelist(id),
     name text,
     code text unique,
@@ -110,7 +93,7 @@ CREATE TABLE constraintlist(
 );
 
 CREATE TABLE dumpsizes (
-    id integer primary key default nextval('dumpsizes_id_seq'),
+    id serial primary key,
     datid integer references dblist(id),
     dumpname text,
     size bigint,
@@ -118,7 +101,7 @@ CREATE TABLE dumpsizes (
 );
 
 CREATE TABLE dbstats (
-    id integer primary key default nextval('dbstats_id_seq'),
+    id serial primary key,
     datid integer references dblist(id),
     inserted integer,
     deleted integer,
@@ -129,7 +112,7 @@ CREATE TABLE dbstats (
 );
 
 CREATE TABLE tablestats (
-    id integer primary key default nextval('tablestats_id_seq'),
+    id serial primary key,
     relid integer references tablelist(id),
     autovacuum bigint,
     last_analyze timestamp,
@@ -138,28 +121,28 @@ CREATE TABLE tablestats (
 );
 
 CREATE TABLE growth_ratio_db (
-    id integer primary key default nextval('growth_ratio_db_id_seq'),
+    id serial primary key,
     datid integer references dblist(id),
     size bigint,
     created_at timestamp
 );
 
 CREATE TABLE growth_ratio_table (
-    id integer primary key default nextval('growth_ratio_table_id_seq'),
+    id serial primary key,
     relid integer references tablelist(id),
     size bigint,
     created_at timestamp
 );
 
 CREATE TABLE growth_ratio_index (
-    id integer primary key default nextval('growth_ratio_table_id_seq'),
+    id serial primary key,
     relid integer references constraintlist(id),
     size bigint,
     created_at timestamp
 );
 
 CREATE TABLE bgwriterstats (
-    id integer primary key default nextval('bgwriterstats_id_seq'),
+    id serial primary key,
     serverid integer references serverlist(id),
     checkpoints_timed bigint,
     checkpoints_req bigint,
@@ -176,7 +159,7 @@ CREATE TABLE bgwriterstats (
 );
 
 CREATE TABLE indexstats (
-    id integer primary key default nextval('indexstats_id_seq'),
+    id serial primary key,
     relid integer references constraintlist(id),
     size bigint,
     usage bigint,
@@ -185,7 +168,7 @@ CREATE TABLE indexstats (
 );
 
 CREATE TABLE checkpointstats (
-    id integer primary key default nextval('checkpointstats_id_seq'),
+    id serial primary key,
     serverid integer references serverlist(id),
     checkpoints_timed bigint,
     checkpoints_req bigint,
@@ -193,7 +176,7 @@ CREATE TABLE checkpointstats (
 );
 
 CREATE TABLE repstats (
-    id integer primary key default nextval('repstats_id_seq'),
+    id serial primary key,
     serverid integer references serverlist(id),
     rep_time timestamp,
     rep_delay timestamp,
@@ -201,7 +184,7 @@ CREATE TABLE repstats (
 );
 
 CREATE TABLE query_heap_blks_stats (
-    id integer primary key default nextval('query_heap_blks_stats_id_seq'),
+    id serial primary key,
     relid integer references tablelist(id),
     hit_pct decimal(7,2),
     heap_blks_hit bigint,
@@ -210,7 +193,7 @@ CREATE TABLE query_heap_blks_stats (
 );
 
 CREATE TABLE query_disc_cache_stats (
-    id integer primary key default nextval('query_disc_cache_stats_id_seq'),
+    id serial primary key,
     relid integer references tablelist(id),
     heap_from_disc bigint,
     heap_from_cache bigint,
@@ -224,7 +207,7 @@ CREATE TABLE query_disc_cache_stats (
 );
 
 CREATE TABLE query_bloat_stats (
-    id integer primary key default nextval('query_bloat_stats_id_seq'),
+    id serial primary key,
     relid integer references tablelist(id),
     tbloat decimal(7,1),
     wastedbytes bigint,

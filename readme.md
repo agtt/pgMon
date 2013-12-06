@@ -1,9 +1,14 @@
-deneme
+Name:
+====
+pgMon
 
-Name:     pgMon
 Description:
-          pgMon is a monitor tool for PostgreSQL.
-Usage:
+============
+pgMon is a monitor tool for PostgreSQL.
+
+Usage
+=====
+```
           ./pgMon.sh [ --db db1,db2,.. ] [ --backupdir dir ] -dump
           ./pgMon.sh [ --db db1,db2,.. ] -growth-ratio-db
           ./pgMon.sh [ --db db1,db2,.. ] -growth-ratio-table
@@ -19,10 +24,11 @@ Usage:
           ./pgMon.sh -setup
           ./pgMon.sh [ --db db1,db2,.. ] -init
           ./pgMon.sh -checkconnection
-
+```
      Notes:  *** Setter parameters should be defined before the action parameters   ***
              *** [ .. ] means that these parameters are optional                    ***
-OPTIONS:
+OPTIONS
+=======
   ACTION OPTIONS
    -dump                  sends dump files sizes to pgMon database
    -growth-ratio-db       sends sizes of all OR defined databases to pgMon database for growth ratio

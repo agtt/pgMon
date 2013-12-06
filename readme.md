@@ -29,6 +29,7 @@ Usage
              *** [ .. ] means that these parameters are optional                    ***
 OPTIONS
 =======
+```
   ACTION OPTIONS
    -dump                  sends dump files sizes to pgMon database
    -growth-ratio-db       sends sizes of all OR defined databases to pgMon database for growth ratio
@@ -55,3 +56,4 @@ OPTIONS
    --backupdir   sets the backup director path | used with -dump option to define backups directory
    --clientip    sets
    --hostip      sets
+```

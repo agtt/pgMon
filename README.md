@@ -1,13 +1,13 @@
-Name:
-====
 pgMon
-
-Description:
-============
-pgMon is a monitor tool for PostgreSQL.
+====
+pgMon is a monitor tool for PostgreSQL. This collects some statistics and information and sends them to the main log database (pgmondb). 
 
 Usage
 =====
+* First, copy script to database server and run it with crontab
+* Choose options listed below
+
+***Note:*** Do not forget to allow database connection permissions in pgmondb server.
 ```
           ./pgMon.sh [ --db db1,db2,.. ] [ --backupdir dir ] -dump
           ./pgMon.sh [ --db db1,db2,.. ] -growth-ratio-db
